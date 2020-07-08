@@ -9,13 +9,13 @@ var port = process.env.PORT || 3000;
 app.use(express.static(__dirname + "/views"));
 app.use(express.static(__dirname + "/public"));
 
-var forecastKey = process.env.OWM_API_KEY;
-var mapboxKey = process.env.MAPBOX_API_KEY
+var OWM_API_KEY = process.env.OWM_API_KEY;
+var MAPBOX_API_KEY = process.env.MAPBOX_API_KEY;
 
 
 // USING MAPBOX API.
 function geocode(address, callback) {
-    var url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${mapboxKey}&limit=1`;
+    var url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${MAPBOX_API_KEY}&limit=1`;
     request({ url: url, json: true }, function(error, response, body) {
         if (error) {
             callback("Failed to connect to the server!");
@@ -34,7 +34,7 @@ function geocode(address, callback) {
 
 // USING OPEN WEATHER MAP API. 
 function forecast(longitude, latitude, callback) {
-    var url = `https://api.openweathermap.org/data/2.5/weather?lon=${longitude}&lat=${latitude}&appid=${forecastKey}&units=metric`;
+    var url = `https://api.openweathermap.org/data/2.5/weather?lon=${longitude}&lat=${latitude}&appid=${OWM_API_KEY}&units=metric`;
     request({ url: url, json: true }, function(error, response, body) {
         if (error) {
             callback("Failed to connect to the server!", undefined);
